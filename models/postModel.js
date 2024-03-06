@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT,
       allowNull: false,
     },
+    comments: {
+      type: Sequelize.JSON,
+      defaultValue: null,
+    },
   });
 
   return Post;

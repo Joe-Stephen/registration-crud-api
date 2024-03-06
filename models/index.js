@@ -30,6 +30,8 @@ db.sequelize = sequelize;
 db.users = require("./userModel.js")(sequelize, Sequelize);
 db.posts = require("./postModel.js")(sequelize, Sequelize);
 db.images = require("./imageModel.js")(sequelize, Sequelize);
+db.comments = require("./commentModel.js")(sequelize, Sequelize);
+
 
 
 db.sequelize.sync({ force: false }).then(() => {

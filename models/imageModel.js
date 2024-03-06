@@ -2,11 +2,11 @@ module.exports = (sequelize, Sequelize) => {
   const Image = sequelize.define("images", {
     postId: {
       type: Sequelize.INTEGER,
-      defaultValue: null,
+      allowNull: false,
     },
     images: {
       type: Sequelize.JSON,
-      allowNull: false,
+      defaultValue: null,
     },
   });
 
