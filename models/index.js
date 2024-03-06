@@ -32,22 +32,16 @@ db.posts = require("./postModel.js")(sequelize, Sequelize);
 db.images = require("./imageModel.js")(sequelize, Sequelize);
 db.comments = require("./commentModel.js")(sequelize, Sequelize);
 
-
-
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!");
 });
 
-// 1 to Many Relation
-
-// db.products.hasMany(db.reviews, {
-//     foreignKey: 'product_id',
-//     as: 'review'
-// })
-
-// db.reviews.belongsTo(db.products, {
-//     foreignKey: 'product_id',
-//     as: 'product'
-// })
+db.users.hasMany(db.posts, { foreignKey: "userId" });
+db.images.belongsTo(db.posts, { foreignKey: "postId" });
+db.comments.belongsTo(db.users, { foreignKey: "userId" });
+db.comments.belongsTo(db.posts, { foreignKey: "postId" });
+db.posts.hasMany(db.comments, { foreignKey: "postId" });
+db.posts.hasMany(db.images, { foreignKey: "postId" });
+db.posts.belongsTo(db.users, { foreignKey: "userId" });
 
 module.exports = db;

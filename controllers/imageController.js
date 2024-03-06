@@ -1,6 +1,7 @@
 const db = require("../models");
 const Image = db.images;
 const Post = db.posts;
+const User = db.users;
 
 const storeImage = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const storeImage = async (req, res) => {
       arr.push(file.originalname);
     });
     const newPost = await Post.create({
-      userId:3,
+      userId: 3,
       title: req.body.title,
       description: req.body.description,
     });
@@ -28,6 +29,22 @@ const storeImage = async (req, res) => {
     res.status(201).json("Failed to save the post.");
   }
 };
+
+const listAllPostsOfUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log("the userId= ", userId);
+
+    const posts = await User.findByPk(userId, { include: Post });
+    console.log("posts== ", posts);
+
+    res.status(201).json("The post has been logged.");
+  } catch (error) {
+    console.error("An error happened in listAllPostsOfUser :", error);
+    res.status(201).json("Failed to listAllPostsOfUser.");
+  }
+};
 module.exports = {
   storeImage,
+  listAllPostsOfUser,
 };

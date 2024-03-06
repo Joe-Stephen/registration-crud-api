@@ -9,7 +9,10 @@ const {
   registerUser,
   validateLoginDetails,
 } = require("../controllers/userController");
-const { storeImage } = require("../controllers/imageController");
+const {
+  storeImage,
+  listAllPostsOfUser,
+} = require("../controllers/imageController");
 
 //user routes
 userRouter.post("/register", registerUser);
@@ -21,5 +24,6 @@ userRouter.post("/store-image", multerMiddleware.array("photo"), storeImage);
 //comment routes
 userRouter.post("/comment", postComment);
 userRouter.delete("/comment", deleteComment);
+userRouter.get("/posts/:userId", listAllPostsOfUser);
 
 module.exports = userRouter;

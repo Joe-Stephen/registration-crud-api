@@ -75,7 +75,7 @@ const validateLoginDetails = async (req, res) => {
           email: existingUser.email,
           token: generateToken(existingUser.email),
         };
-        res.header('Authorization', loggedInUser.token).send(loggedInUser);
+        res.header("Authorization", loggedInUser.token).send(loggedInUser);
       } else {
         console.log("Incorrect password.");
         res.status(400).json("Incorrect password.");
@@ -88,51 +88,12 @@ const validateLoginDetails = async (req, res) => {
 
 //JWT generator function
 const generateToken = (email) => {
-  return jwt.sign({email}, process.env.JWT_SECRET, {
+  return jwt.sign({ email }, process.env.JWT_SECRET, {
     expiresIn: "1d",
-  });
-};
-
-//@desc user uploads a post
-//@route POST /
-//@access Private
-const postUpload = async (req, res) => {
-  const { description, photoPath } = req.body;
-  if (!description || !photoPath) {
-    res.status(400).json({ error: "Please add all fields." });
-    throw new Error("Please add all fields.");
-  }
-
-  uploadImage(photoPath)
-    .then((result) => {
-      console.log("Image uploaded successfully:", result.url);
-    })
-    .catch((error) => {
-      console.error("Error uploading image:", error);
-    });
-
-  const postData = {
-    userId: userId,
-    title: title,
-    description: description,
-    imageUrl: result.secure_url,
-  };
-
-  //saving post to db
-  const sql = "INSERT INTO posts SET ?";
-  db.query(sql, postData, function (err, data) {
-    if (err) {
-      console.error("An error happened while saving the post!", err);
-      res.status(400).json({ error: "Post creation failed." });
-    } else {
-      console.log("Post created successfully");
-      res.status(201).json("Post created.");
-    }
   });
 };
 
 module.exports = {
   registerUser,
   validateLoginDetails,
-  postUpload,
 };
