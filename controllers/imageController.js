@@ -14,9 +14,12 @@ const storeImage = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
     });
-    await Image.create({
-      postId: newPost.id,
-      images: arr,
+    arr.forEach(async(file) => {
+      console.log("the file from foreach:",file);
+      await Image.create({
+        postId: newPost.id,
+        image: file,
+      });
     });
 
     res.status(201).json("The post has been saved.");
