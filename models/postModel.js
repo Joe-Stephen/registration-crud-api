@@ -1,5 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
   const Post = sequelize.define("posts", {
+    userId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
     title: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -7,10 +11,6 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.TEXT,
       allowNull: false,
-    },
-    comments: {
-      type: Sequelize.JSON,
-      defaultValue: null,
     },
   });
 

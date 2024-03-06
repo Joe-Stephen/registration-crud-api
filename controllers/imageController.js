@@ -11,21 +11,21 @@ const storeImage = async (req, res) => {
       arr.push(file.originalname);
     });
     const newPost = await Post.create({
+      userId:3,
       title: req.body.title,
       description: req.body.description,
     });
-    arr.forEach(async(file) => {
-      console.log("the file from foreach:",file);
+    arr.forEach(async (file) => {
+      console.log("the file from foreach:", file);
       await Image.create({
         postId: newPost.id,
         image: file,
       });
     });
-
     res.status(201).json("The post has been saved.");
   } catch (error) {
-    console.error("An error happened storeImage :", error);
-    res.status(201).json("The post has been saved.");
+    console.error("An error happened in storeImage :", error);
+    res.status(201).json("Failed to save the post.");
   }
 };
 module.exports = {
